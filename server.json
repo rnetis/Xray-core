@@ -1,0 +1,65 @@
+{
+  "log": {
+    "loglevel": "debug"
+  },
+  "api": {
+    "tag": "api",
+    "services": ["HandlerService", "LoggerService", "StatsService"]
+  },
+  "stats":{},
+  "inbounds": [
+    {
+      "listen": "0.0.0.0",
+      "port": 443 ,
+      "protocol": "vless",
+      "tag": "api",
+      "settings": {
+        "clients": [
+          {
+            "id": "74cb47bc-cff5-431a-b89c-1653a7e187a4",
+            "email": "rayan@anode.autos"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/"
+        }
+      },
+                        "sniffing": {
+                                "enabled": true,
+                                "destOverride": [
+                                        "http",
+                                        "tls"
+                                ]
+                        }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "tag": "blocked",
+      "protocol": "blackhole",
+      "settings": {}
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "geoip:ir",
+          "geoip:private"
+        ],
+        "outboundTag": "blocked"
+      }
+    ]
+  }
+}
