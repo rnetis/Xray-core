@@ -55,7 +55,6 @@
       {
         "type": "field",
         "ip": [
-          "geoip:ir",
           "geoip:private"
         ],
         "outboundTag": "blocked"
